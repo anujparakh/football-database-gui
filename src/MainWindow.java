@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
 
 public class MainWindow extends JFrame
 {
@@ -18,7 +19,7 @@ public class MainWindow extends JFrame
     
     // Context
     String currentPageCode;
-
+    List<List<String>> dataRows;
     
     JLabel todoField;
     JEditorPane htmlTable;
@@ -137,7 +138,15 @@ public class MainWindow extends JFrame
     	String html;
     	html="<html><head></head><body>";
     	
-    	html += "<table><tr><th></th><th>Savings</th></tr><tr><td>January</td><td>$100</td></tr><tr><td>February</td><td>$80</td></tr></table>";
+//    	html += "<table><tr><th></th><th>Savings</th></tr><tr><td>January</td><td>$100</td></tr><tr><td>February</td><td>$80</td></tr></table>";
+    	
+    	html += "<table><tr>";
+    	
+//    	html += "<th>" + 
+    	
+    			
+//		dataRows 
+    	html += "</tr></table>";
     	
     	html+="</body></html>";
     	
@@ -146,7 +155,12 @@ public class MainWindow extends JFrame
     
     public void updateNestedWindow() {
 
-		htmlTable.setText(generateTableHTML());
+    	if(currentPageCode.equals("example") || currentPageCode.equals("view")) {
+    		htmlTable.setText(generateTableHTML());
+    	} else {
+    		htmlTable.setText("");
+    	}
+//		htmlTable.setText(generateTableHTML());
     }
 
     MainWindow() {
@@ -181,6 +195,10 @@ public class MainWindow extends JFrame
         
         generateNestedWindow();
         updateNestedWindow();
+    }
+    
+    protected void setSQLOutput(List<List<String>> output) {
+    	dataRows = output;
     }
     
     protected void updatePageCode(String pg) {
