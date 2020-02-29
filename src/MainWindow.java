@@ -174,7 +174,8 @@ public class MainWindow extends JFrame
 			
 			tempSidebarButton.setFont(new Font("Tahoma", Font.PLAIN, 24));
 			tempSidebarButton.setBackground(new java.awt.Color(170, 169, 173));
-			
+			tempSidebarButton.setForeground(Color.BLACK);
+
 			if(currentPageCode.equals(sidebarDisplayCodes[i])) {
 				tempSidebarButton.setBackground(Color.BLACK);
 				tempSidebarButton.setForeground(Color.WHITE);
