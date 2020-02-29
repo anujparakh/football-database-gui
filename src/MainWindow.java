@@ -227,13 +227,29 @@ public class MainWindow extends JFrame
     }
     
     public void updateNestedWindow() {
+		htmlTable.setText("");
 
+    	if(currentPageCode.equals("tutorial")) {
+    		/*
+    		 * 
+    		 * TODO: Actually have a functioning description
+    		 * 
+    		 * 
+    		 */
+    		htmlTable.setText("<html><head></head><body>"
+    				+ "<font face=\"Tahoma\" size=\"6\">"
+    				+ "Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, "
+    				+ "Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, "
+    				+ "Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, "
+    				+ "</font>"
+    				+ "</body></html>");
+    	}
+    	
     	if(currentPageCode.equals("view")) {
         	lastPageField.setText("Last Page");
         	nextPageField.setText("Next Page");
     		htmlTable.setText(generateTableHTML());
     	} else {
-    		htmlTable.setText("");
         	lastPageField.setText("");
         	nextPageField.setText("");
     	}
