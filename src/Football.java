@@ -20,7 +20,7 @@ public class Football {
 		
 		exampleTable.add(headerRow);
 		
-		int numRows = new Random().nextInt(5) + 5;
+		int numRows = new Random().nextInt(5 + 25) + 5;
 		for(int i = 0; i < numRows; i++) {
 			List<String> dataRow = new ArrayList<>();
 			dataRow.add("Johnson");

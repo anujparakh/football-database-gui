@@ -12,7 +12,7 @@ public class MainWindow extends JFrame
 	
 	// 1600 x 900 [75% of that number to look good on laptop]	
 	int WIDTH = 1200;
-	int page = 1;
+	int pageCount = 0;
 	int HEIGHT = 675;
     private JFrame myJFrame;
     private Container body;
@@ -22,7 +22,8 @@ public class MainWindow extends JFrame
     String currentPageCode;
     List<List<String>> dataRows;
     
-    JLabel todoField;
+    JLabel nextPageField;
+    JLabel lastPageField;
     JEditorPane htmlTable;
     JScrollPane scrollPane;
     
@@ -115,13 +116,13 @@ public class MainWindow extends JFrame
     	// 100 - 600 pixels with 300 pixel widths are all taken
     	// This function generates 100 - 600 height and 300 - width pixels
     	
-//    	todoField = new JLabel();
-//    	todoField.setFont(new Font("Tahoma", Font.PLAIN, 50));
-//    	todoField.setHorizontalAlignment(JLabel.CENTER);
-//    	todoField.setBounds(300, 100, WIDTH - 300, 500);
-//    	todoField.setForeground(Color.BLACK);
+//    	nextPageField = new JLabel();
+//    	nextPageField.setFont(new Font("Tahoma", Font.PLAIN, 50));
+//    	nextPageField.setHorizontalAlignment(JLabel.CENTER);
+//    	nextPageField.setBounds(300, 100, WIDTH - 300, 500);
+//    	nextPageField.setForeground(Color.BLACK);
 //    	
-//    	body.add(todoField);
+//    	body.add(nextPageField);
     	
     	String html;
     	html="<html><head></head><body>";
@@ -131,16 +132,50 @@ public class MainWindow extends JFrame
     	htmlTable.setBounds(300, 100, WIDTH - 300, 500);
     	htmlTable.setEditable(false);
     	
-//    	todoField = new JLabel();
-//    	todoField.setFont(new Font("Tahoma", Font.PLAIN, 15));
-//    	todoField.setHorizontalAlignment(JLabel.CENTER);
-//    	todoField.setBounds(600, 600, 100, 20);
-//    	todoField.setForeground(Color.BLACK);
+    	nextPageField = new JLabel();
+    	nextPageField.setFont(new Font("Tahoma", Font.PLAIN, 17));
+    	nextPageField.setHorizontalAlignment(JLabel.CENTER);
+    	nextPageField.setBounds(900, 600, 100, 20);
+    	nextPageField.setForeground(Color.BLACK);
+    	    	
+    	nextPageField.addMouseListener(new MouseAdapter()  
+    	{  
+    	    public void mouseClicked(MouseEvent e)  
+    	    {  
+    	    	System.out.println("Next Page ...");
+    	    	pageCount += 1;
+    	    	htmlTable.setText(generateTableHTML());
+    	    }  
+    	}); 
     	
-//    	todoField.setVisible(true);
     	
-//    	body.add(todoField);
+    	body.add(nextPageField);
 
+    	lastPageField = new JLabel();
+    	lastPageField.setFont(new Font("Tahoma", Font.PLAIN, 17));
+    	lastPageField.setHorizontalAlignment(JLabel.CENTER);
+    	lastPageField.setBounds(800, 600, 100, 20);
+    	lastPageField.setForeground(Color.BLACK);
+    	    	
+    	lastPageField.addMouseListener(new MouseAdapter()  
+    	{  
+    	    public void mouseClicked(MouseEvent e)  
+    	    {  
+    	    	System.out.println("Last Page ...");
+    	    	pageCount -= 1;
+
+    	    	if(pageCount == -1) {
+    	    		pageCount = 0;
+    	    	}
+    	    	htmlTable.setText(generateTableHTML());
+    	    }  
+    	}); 
+    	
+    	
+    	body.add(lastPageField);
+
+    	
+    	
 		body.add(htmlTable);
 //		body.add(nextPage);
     }
@@ -154,18 +189,32 @@ public class MainWindow extends JFrame
     	html += "<table>";
     	
     	html += "<tr>";
+		html += "<th> </th>";
     	for(int i = 0; i < dataRows.get(0).size(); i++) {
     		html += "<th><h2><strong>  &nbsp; " + dataRows.get(0).get(i) + " &nbsp;  &nbsp; </h2></strong></th>";
     	}
     	html += "</tr>";
     	
-    	for(int i = 1; i < dataRows.size(); i++) {
-        	html += "<tr>";
-        	for(int j = 0; j < dataRows.get(i).size(); j++) {
-        		html += "<td><font face=\"Tahoma\" size=\"6\">  &nbsp; "+ dataRows.get(i).get(j) + "</font></td>";
+//		WITHOUT PAGINATION
+//    	for(int i = 1; i < dataRows.size(); i++) {
+//        	html += "<tr>";
+//    		html += "<td>"+ i + "</td>";	
+//        	for(int j = 0; j < dataRows.get(i).size(); j++) {
+//        		html += "<td><font face=\"Tahoma\" size=\"6\">  &nbsp; "+ dataRows.get(i).get(j) + "</font></td>";
+//        	}
+//        	html += "</tr>";
+//    	}
+    	
+//    	WITH PAGINATION
+    	for(int i = 1 + (pageCount * 12); i < 1 + ((pageCount + 1) * 12); i++) {
+        	if (i < dataRows.size()) {
+        		html += "<tr>";
+        		html += "<td>"+ i + "</td>";	
+            	for(int j = 0; j < dataRows.get(i).size(); j++) {
+            		html += "<td><font face=\"Tahoma\" size=\"6\">  &nbsp; "+ dataRows.get(i).get(j) + "</font></td>";
+            	}
+            	html += "</tr>";
         	}
-        	
-        	html += "</tr>";
     	}
     	
     	html += "</table>";
@@ -180,12 +229,18 @@ public class MainWindow extends JFrame
     public void updateNestedWindow() {
 
     	if(currentPageCode.equals("view")) {
+        	lastPageField.setText("Last Page");
+        	nextPageField.setText("Next Page");
     		htmlTable.setText(generateTableHTML());
     	} else {
     		htmlTable.setText("");
+        	lastPageField.setText("");
+        	nextPageField.setText("");
     	}
     	
-//    	todoField.setText("Next Page");
+
+    	
+    	
 //		htmlTable.setText(generateTableHTML());
     }
 
@@ -229,6 +284,8 @@ public class MainWindow extends JFrame
     
     protected void updatePageCode(String pg) {
     	currentPageCode = pg;
+    	pageCount = 0;
+    	
     	
 //		myJFrame.getContentPane().setBackground(new java.awt.Color(245, 245, 245));
 		
