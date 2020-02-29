@@ -20,7 +20,7 @@ public class Football {
 		
 		exampleTable.add(headerRow);
 		
-		int numRows = new Random().nextInt(11 + 1) + 5;
+		int numRows = new Random().nextInt(5) + 5;
 		for(int i = 0; i < numRows; i++) {
 			List<String> dataRow = new ArrayList<>();
 			dataRow.add("Johnson");
@@ -49,13 +49,34 @@ public class Football {
         mw = new MainWindow();
 	}
 	
-	public static void handleUpdatePageDisplay(String pageCode) {
+	public static void handleUpdatePageDisplay(String pageCode, List<List<String>> data) {
 		//	This is where new SQL data will get feeded in
 		
 		System.out.println("Updating data ..." + pageCode);
 		
-		generateExampleSQLTable();
-		mw.setSQLOutput(exampleTable);
+		if(pageCode.equals("download")) {
+			/*
+			 * 
+			 * TODO: Download SQL Data
+			 * 
+			 * 
+			 */
+			System.out.println("DOWNLOAD::: " + data);
+		}
+		
+		if(pageCode.equals("view")) {
+			/*
+			 * 
+			 * TODO: Use whatever is in Create Query to
+			 * Build and return a SQL reponse converted
+			 * to a string matrix
+			 * 
+			 */
+			generateExampleSQLTable();
+			mw.setSQLOutput(exampleTable);
+		}
+
+		
 		
 		mw.updatePageCode(pageCode);
 	}

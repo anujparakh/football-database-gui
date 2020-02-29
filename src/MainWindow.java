@@ -23,6 +23,7 @@ public class MainWindow extends JFrame
     
     JLabel todoField;
     JEditorPane htmlTable;
+    JScrollPane scrollPane;
     
     protected void generateMainWindow() {
 		myJFrame = new JFrame("Testing Name");
@@ -102,8 +103,7 @@ public class MainWindow extends JFrame
         	
         	sidebarButtons[i].addActionListener(new ActionListener() {
 		      public void actionPerformed(ActionEvent e) {
-		    	  System.out.println("Prime load file button clicked.");
-		    	  mainClass.handleUpdatePageDisplay(sidebarDisplayCodes[inner_I]);
+		    	  mainClass.handleUpdatePageDisplay(sidebarDisplayCodes[inner_I], dataRows);
 		      }
         	});
         }
@@ -129,8 +129,7 @@ public class MainWindow extends JFrame
 
     	htmlTable.setBounds(300, 100, WIDTH - 300, 500);
     	htmlTable.setEditable(false);
-
-
+    	
 		body.add(htmlTable);
     }
     
@@ -140,22 +139,35 @@ public class MainWindow extends JFrame
     	
 //    	html += "<table><tr><th></th><th>Savings</th></tr><tr><td>January</td><td>$100</td></tr><tr><td>February</td><td>$80</td></tr></table>";
     	
-    	html += "<table><tr>";
+    	html += "<table>";
     	
-//    	html += "<th>" + 
+    	html += "<tr>";
+    	for(int i = 0; i < dataRows.get(0).size(); i++) {
+    		html += "<th><h2><strong>  &nbsp; " + dataRows.get(0).get(i) + " &nbsp;  &nbsp; </h2></strong></th>";
+    	}
+    	html += "</tr>";
     	
-    			
-//		dataRows 
-    	html += "</tr></table>";
+    	for(int i = 1; i < dataRows.size(); i++) {
+        	html += "<tr>";
+        	for(int j = 0; j < dataRows.get(i).size(); j++) {
+        		html += "<td><font face=\"Tahoma\" size=\"6\">  &nbsp; "+ dataRows.get(i).get(j) + "</font></td>";
+        	}
+        	
+        	html += "</tr>";
+    	}
+    	
+    	html += "</table>";
     	
     	html+="</body></html>";
+    	
+    	System.out.println(html);
     	
     	return html;
     }
     
     public void updateNestedWindow() {
 
-    	if(currentPageCode.equals("example") || currentPageCode.equals("view")) {
+    	if(currentPageCode.equals("view")) {
     		htmlTable.setText(generateTableHTML());
     	} else {
     		htmlTable.setText("");
