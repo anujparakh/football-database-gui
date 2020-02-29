@@ -21,6 +21,7 @@ public class MainWindow extends JFrame
 
     
     JLabel todoField;
+    JEditorPane htmlTable;
     
     protected void generateMainWindow() {
 		myJFrame = new JFrame("Testing Name");
@@ -112,17 +113,40 @@ public class MainWindow extends JFrame
     	// 100 - 600 pixels with 300 pixel widths are all taken
     	// This function generates 100 - 600 height and 300 - width pixels
     	
-    	todoField = new JLabel();
-    	todoField.setFont(new Font("Tahoma", Font.PLAIN, 50));
-    	todoField.setHorizontalAlignment(JLabel.CENTER);
-    	todoField.setBounds(300, 100, WIDTH - 300, 500);
-    	todoField.setForeground(Color.BLACK);
+//    	todoField = new JLabel();
+//    	todoField.setFont(new Font("Tahoma", Font.PLAIN, 50));
+//    	todoField.setHorizontalAlignment(JLabel.CENTER);
+//    	todoField.setBounds(300, 100, WIDTH - 300, 500);
+//    	todoField.setForeground(Color.BLACK);
+//    	
+//    	body.add(todoField);
     	
-    	body.add(todoField);
+    	String html;
+    	html="<html><head></head><body>";
+	    html+="</body></html>";
+    	htmlTable = new JEditorPane("text/html",html);
+
+    	htmlTable.setBounds(300, 100, WIDTH - 300, 500);
+    	htmlTable.setEditable(false);
+
+
+		body.add(htmlTable);
+    }
+    
+    public String generateTableHTML() {
+    	String html;
+    	html="<html><head></head><body>";
+    	
+    	html += "<table><tr><th></th><th>Savings</th></tr><tr><td>January</td><td>$100</td></tr><tr><td>February</td><td>$80</td></tr></table>";
+    	
+    	html+="</body></html>";
+    	
+    	return html;
     }
     
     public void updateNestedWindow() {
-    	todoField.setText(currentPageCode);
+
+		htmlTable.setText(generateTableHTML());
     }
 
     MainWindow() {
