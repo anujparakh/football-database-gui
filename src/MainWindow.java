@@ -12,6 +12,7 @@ public class MainWindow extends JFrame
 	
 	// 1600 x 900 [75% of that number to look good on laptop]	
 	int WIDTH = 1200;
+	int page = 1;
 	int HEIGHT = 675;
     private JFrame myJFrame;
     private Container body;
@@ -130,7 +131,18 @@ public class MainWindow extends JFrame
     	htmlTable.setBounds(300, 100, WIDTH - 300, 500);
     	htmlTable.setEditable(false);
     	
+//    	todoField = new JLabel();
+//    	todoField.setFont(new Font("Tahoma", Font.PLAIN, 15));
+//    	todoField.setHorizontalAlignment(JLabel.CENTER);
+//    	todoField.setBounds(600, 600, 100, 20);
+//    	todoField.setForeground(Color.BLACK);
+    	
+//    	todoField.setVisible(true);
+    	
+//    	body.add(todoField);
+
 		body.add(htmlTable);
+//		body.add(nextPage);
     }
     
     public String generateTableHTML() {
@@ -172,6 +184,8 @@ public class MainWindow extends JFrame
     	} else {
     		htmlTable.setText("");
     	}
+    	
+//    	todoField.setText("Next Page");
 //		htmlTable.setText(generateTableHTML());
     }
 
