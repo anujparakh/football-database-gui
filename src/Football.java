@@ -1,4 +1,5 @@
 import java.util.*;
+import javax.swing.*;
 import java.sql.*;
 import java.io.FileWriter;  // Import the File class
 import java.io.IOException;  // Import the IOException class to handle errors
@@ -55,10 +56,12 @@ public class Football {
 			Class.forName("org.postgresql.Driver");
 			sqlConnection = DriverManager.getConnection("jdbc:postgresql://csce-315-db.engr.tamu.edu/oursql21", my.user,
 					my.pswd);
-		} catch (Exception e) {
+		}
+		catch (Exception e) 
+		{
 			e.printStackTrace();
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
-			System.exit(0);
+			// System.exit(0);
 		} // end try catch
 
 		System.out.println("Opened Database Successfully");
@@ -69,33 +72,57 @@ public class Football {
 		setupDatabase();
 	}
 	
-	public static void handleUpdatePageDisplay(String pageCode, List<List<String>> data) 
+	public static void handleUpdatePageDisplay(String pageCode, CreatePanel createPanel) 
 	{
 		//	This is where new SQL data will get feeded in
 		System.out.println("Updating data ..." + pageCode);
 		
-		if(pageCode.equals("download")) {
-			/*
-			 * 
-			 * TODO: Download SQL Data
-			 * 
-			 * 
-			 */			
-			List<List<String>> exampleTable = executeQuery("select first_name, last_name from player;");
-			writeDataToCSV(exampleTable, "test.csv");
-			System.out.println("DOWNLOAD::: " + data);
+		if(pageCode.equals("download")) 
+		{
+			// Check Create Page
+			String checkResult = createPanel.checkProblems();
+			if (! checkResult.equals(""))
+			{
+				JOptionPane.showMessageDialog(null, checkResult, "Create Error",
+							JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+
+			// Get Query from Create page
+			String queryString = createPanel.convertToQuery();
+
+			// Execute Query and Display Result
+			List<List<String>> results = executeQuery(queryString);
+			writeDataToCSV(results, "output.csv");
+
+			JOptionPane.showMessageDialog(null, "Data downloaded to output.csv", "Download Finished",
+							JOptionPane.INFORMATION_MESSAGE);
+			return;
 		}
 		
 		if(pageCode.equals("view")) {
-			/*
-			 * 
-			 * TODO: Use whatever is in Create Query to
-			 * Build and return a SQL reponse converted
-			 * to a string matrix
-			 * 
-			 */
-			List<List<String>> exampleTable = executeQuery("select first_name, last_name from player limit 20;");
-			mw.setSQLOutput(exampleTable);
+			// Check Create Page
+			String checkResult = createPanel.checkProblems();
+			if (! checkResult.equals(""))
+			{
+				JOptionPane.showMessageDialog(null, checkResult, "Create Error",
+							JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+			String viewProblems = createPanel.checkIfViewable();
+			if (! viewProblems.equals(""))
+			{
+				JOptionPane.showMessageDialog(null, viewProblems, "Data too big",
+							JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+
+			// Get Query from Create page
+			String queryString = createPanel.convertToQuery();
+
+			// Execute Query and Display Result
+			List<List<String>> results = executeQuery(queryString);
+			mw.setSQLOutput(results);
 		}
 
 		mw.updatePageCode(pageCode);
@@ -165,6 +192,37 @@ public class Football {
 		}
 		
 		return null;
+	}
+
+	public ArrayList<String> getAllColumnsForTable(String table)
+	{
+		try
+		{
+			Statement stmt = sqlConnection.createStatement();
+			ResultSet result = stmt.executeQuery("select * from " + table + ";");
+			ResultSetMetaData resultSetMetaData = result.getMetaData();
+			ArrayList<String> headerRow = new ArrayList<>();
+			headerRow.add("None");
+			for (int i = 0; i < resultSetMetaData.getColumnCount(); ++i)
+			{
+				headerRow.add(resultSetMetaData.getColumnName(i + 1));
+			}
+
+			return headerRow;
+		}
+		catch(Exception ex)
+		{
+			System.out.println("Error in getting column names");
+		}
+
+		return null;
+
+	}
+
+	public String[] getListOfTables()
+	{
+		String[] toReturn = {"None", "conference", "drive", "game", "game_statistics", "kickoff", "kickoff_return", "pass", "play", "player", "player_game_statistics", "punt", "punt_return", "reception", "rush", "stadium", "team", "team_game_statistics"};
+		return toReturn;
 	}
 
 }

@@ -14,5 +14,10 @@ public class Colors
     public static final Color sidebarBorderColor = Color.darkGray;
     public static final Color dividerColor = Color.darkGray;
     public static final Color bottomSectionTextColor = Color.decode("#bbe1fa");
+    public static final Color nestedHeadingTextColor = Color.decode("#0f4c75");
+    public static final Color nestedBackgroundColor = Color.white;
+    public static final Color nestedTextColor = Color.black;
+    public static final Color createLabelBackgroundColor = Color.decode("#0f4c75");
+    public static final Color createLabelTextColor = Color.decode("#bbe1fa");
 
 }
