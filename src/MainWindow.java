@@ -158,7 +158,6 @@ public class MainWindow extends JFrame {
 
 		nextPageField.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("Next Page ...");
 				// Check if last page or not
 				if ((pageCount + 1) * 12 + 1 <= dataRows.size()) {
 					pageCount += 1;
@@ -180,7 +179,6 @@ public class MainWindow extends JFrame {
 
 		lastPageField.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("Last Page ...");
 				pageCount -= 1;
 
 				if (pageCount == -1) {
@@ -223,9 +221,6 @@ public class MainWindow extends JFrame {
 		html += "</table>";
 
 		html += "</body></html>";
-
-		// System.out.println(html);
-
 		return html;
 	}
 

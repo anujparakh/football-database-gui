@@ -64,7 +64,8 @@ public class Football {
 			// System.exit(0);
 		} // end try catch
 
-		System.out.println("Opened Database Successfully");
+		JOptionPane.showMessageDialog(null, "Successfully Connected to Database!", "Database Connected",
+							JOptionPane.INFORMATION_MESSAGE);
 	}
 	public static void main(String[] args) 
 	{
@@ -75,7 +76,6 @@ public class Football {
 	public static void handleUpdatePageDisplay(String pageCode, CreatePanel createPanel) 
 	{
 		//	This is where new SQL data will get feeded in
-		System.out.println("Updating data ..." + pageCode);
 		
 		if(pageCode.equals("download")) 
 		{
