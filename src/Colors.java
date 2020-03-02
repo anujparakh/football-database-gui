@@ -20,4 +20,5 @@ public class Colors
     public static final Color createLabelBackgroundColor = Color.decode("#0f4c75");
     public static final Color createLabelTextColor = Color.decode("#bbe1fa");
 
+
 }

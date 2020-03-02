@@ -26,9 +26,9 @@ public class MainWindow extends JFrame {
 	JEditorPane resultsHtmlTableView;
 
 	// Panels for each page
-	JPanel tutorialPanel;
+	TutorialPanel tutorialPanel;
 	CreatePanel createPanel;
-	JPanel examplePanel;
+	ExamplePanel examplePanel;
 
 	protected void generateMainWindow() 
 	{
@@ -49,29 +49,8 @@ public class MainWindow extends JFrame {
 		body.setLayout(null);
 	}
 
-	protected void generateMainLayout() {
-
-		// // START: Main Title / Subtitle Block
-		// JLabel titleTextField = new JLabel("ourSQL");
-		// titleTextField.setFont(new Font("Arial", Font.PLAIN, 45));
-		// titleTextField.setHorizontalAlignment(JLabel.CENTER);
-		// titleTextField.setBounds(0, 10, WIDTH, 50);
-		// titleTextField.setForeground(Colors.headingTextColor);
-
-		// JLabel subTitleTextField = new JLabel("Your all in one solution for sports statistics needs");
-		// subTitleTextField.setFont(new Font("Arial", Font.PLAIN, 30));
-		// subTitleTextField.setHorizontalAlignment(JLabel.CENTER);
-		// subTitleTextField.setBounds(0, 60, WIDTH, 30);
-		// subTitleTextField.setForeground(Colors.subHeadingTextColor);
-
-		// JPanel headerBackgroundPanel = new JPanel();
-		// headerBackgroundPanel.setBounds(0, 0, WIDTH, 50 + 30 + 20);
-		// headerBackgroundPanel.setBackground(Colors.headerBackgroundColor);
-
-		// JPanel dividerPanel = new JPanel();
-		// dividerPanel.setBounds(0, 98, WIDTH, 2);
-		// dividerPanel.setBackground(Colors.dividerColor);
-
+	protected void generateMainLayout() 
+	{
 		HeadingPanel headingPanel = new HeadingPanel(WIDTH, 100);
 		headingPanel.setBounds(0, 0, WIDTH, 100);
 		headingPanel.setVisible(true);
@@ -233,18 +212,16 @@ public class MainWindow extends JFrame {
 
 	private void generateTutorialPanel()
 	{
-		tutorialPanel = new JPanel();
+		tutorialPanel = new TutorialPanel();
 		tutorialPanel.setBounds(300, 100, WIDTH - 300, 500);
-		tutorialPanel.setBackground(Color.red);
-		tutorialPanel.setVisible(true);
+		tutorialPanel.setVisible(false);
 		body.add(tutorialPanel);
 	}
 
 	private void generateExamplePanel()
 	{
-		examplePanel = new JPanel();
+		examplePanel = new ExamplePanel();
 		examplePanel.setBounds(300, 100, WIDTH - 300, 500);
-		examplePanel.setBackground(Color.blue);
 		examplePanel.setVisible(true);
 		body.add(examplePanel);
 	}
@@ -266,13 +243,12 @@ public class MainWindow extends JFrame {
 
 		if (currentPageCode.equals("tutorial")) 
 		{
+			tutorialPanel.setVisible(true);
+		}
 
-			// resultsHtmlTableView.setText("<html><head></head><body bgcolor=\"" + Colors.backgroundColorHex + "\" >"
-			// 		+ "<font face=\"Arial\" size=\"6\">"
-			// 		+ "Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, "
-			// 		+ "Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, "
-			// 		+ "Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, Tutorial, "
-			// 		+ "</font>" + "</body></html>");
+		if (currentPageCode.equals("example"))
+		{
+			examplePanel.setVisible(true);
 		}
 
 		else if (currentPageCode.equals("create"))

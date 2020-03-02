@@ -61,7 +61,10 @@ public class Football {
 		{
 			e.printStackTrace();
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
-			// System.exit(0);
+			JOptionPane.showMessageDialog(null, "Could Not Connect to Database!", "Database Connection Error",
+			JOptionPane.ERROR_MESSAGE);
+			System.exit(0);
+			
 		} // end try catch
 
 		JOptionPane.showMessageDialog(null, "Successfully Connected to Database!", "Database Connected",

@@ -71,25 +71,25 @@ public class CreatePanel extends JPanel implements EventListener
         add(joinTableDropdown);
         
         JLabel joinOnColLabel = new JLabel("On Column", SwingConstants.CENTER);
-        joinOnColLabel.setBounds(390, 200, 90, 30);
-        joinOnColLabel.setFont(new Font("Ariel", Font.PLAIN, 15));
+        joinOnColLabel.setBounds(390, 200, 80, 30);
+        joinOnColLabel.setFont(new Font("Ariel", Font.PLAIN, 13));
         joinOnColLabel.setForeground(Colors.nestedTextColor);
         add(joinOnColLabel);
 
         joinColumnDropdown = new JComboBox(empty);
-        joinColumnDropdown.setBounds(490, 200, 200, 30);
+        joinColumnDropdown.setBounds(480, 200, 190, 30);
         joinColumnDropdown.setForeground(Colors.nestedTextColor);
         add(joinColumnDropdown);
 
         JLabel joinTypeLabel = new JLabel("With Type", SwingConstants.CENTER);
-        joinTypeLabel.setBounds(700, 200, 80, 30);
-        joinTypeLabel.setFont(new Font("Ariel", Font.PLAIN, 15));
+        joinTypeLabel.setBounds(680, 200, 70, 30);
+        joinTypeLabel.setFont(new Font("Ariel", Font.PLAIN, 13));
         joinTypeLabel.setForeground(Colors.nestedTextColor);
         add(joinTypeLabel);
 
         String []types = {"Inner", "Left", "Right", "Full"};
         joinTypeDropdown = new JComboBox(types);
-        joinTypeDropdown.setBounds(790, 200, 100, 30);
+        joinTypeDropdown.setBounds(760, 200, 100, 30);
         joinTypeDropdown.setForeground(Colors.nestedTextColor);
         add(joinTypeDropdown);
 
@@ -98,14 +98,14 @@ public class CreatePanel extends JPanel implements EventListener
         {
             String[] columns = {"None"};
             JComboBox<String> dropdown = new JComboBox(columns);
-            dropdown.setBounds(230 + i * (120+15), 270, 120, 30);
+            dropdown.setBounds(230 + i * (110+15), 270, 110, 30);
             dropdown.setForeground(Colors.nestedTextColor);
             add(dropdown);
             columnDropdowns.add(dropdown);
         }
 
         allColumnsCheckbox = new JCheckBox("All Columns");
-        allColumnsCheckbox.setBounds(770, 300, 120, 50);
+        allColumnsCheckbox.setBounds(730, 300, 120, 50);
         add(allColumnsCheckbox);
         
         String[] years = {"2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013"};
@@ -158,7 +158,6 @@ public class CreatePanel extends JPanel implements EventListener
                                 columnDropdown.addItem(column);
                             }
                         }
-                        repaint();
                     }
                     else
                     {
@@ -208,7 +207,7 @@ public class CreatePanel extends JPanel implements EventListener
         };
     }
 
-    String checkProblems()
+    public String checkProblems()
     {
         // Actual Problems
         String table = String.valueOf(tableDropdown.getSelectedItem());
@@ -251,7 +250,7 @@ public class CreatePanel extends JPanel implements EventListener
         return "";
     }
 
-    String checkIfViewable()
+    public String checkIfViewable()
     {
         // Data too big
         if (Integer.parseInt(limitField.getText()) > 50)
@@ -270,7 +269,7 @@ public class CreatePanel extends JPanel implements EventListener
         return "";
     }
 
-    String convertToQuery ()
+    public String convertToQuery ()
     {
         String query = "select ";
         String table = String.valueOf(tableDropdown.getSelectedItem());
