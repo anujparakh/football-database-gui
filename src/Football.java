@@ -56,24 +56,42 @@ public class Football {
 			Class.forName("org.postgresql.Driver");
 			sqlConnection = DriverManager.getConnection("jdbc:postgresql://csce-315-db.engr.tamu.edu/oursql21", my.user,
 					my.pswd);
+			
+			System.out.println("Connected!");
+			
 		}
 		catch (Exception e) 
 		{
-			e.printStackTrace();
-			System.err.println(e.getClass().getName() + ": " + e.getMessage());
-			JOptionPane.showMessageDialog(null, "Could Not Connect to Database!", "Database Connection Error",
-			JOptionPane.ERROR_MESSAGE);
-			System.exit(0);
+//			e.printStackTrace();
+//			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+//			JOptionPane.showMessageDialog(null, "Could Not Connect to Database!", "Database Connection Error",
+//			JOptionPane.ERROR_MESSAGE);
+//			System.exit(0);
 			
 		} // end try catch
 
-		JOptionPane.showMessageDialog(null, "Successfully Connected to Database!", "Database Connected",
-							JOptionPane.INFORMATION_MESSAGE);
+//		JOptionPane.showMessageDialog(null, "Successfully Connected to Database!", "Database Connected",
+//							JOptionPane.INFORMATION_MESSAGE);
+		
+//		System.out.println(executeQuery("SELECT * FROM PLAYER"));
+
 	}
 	public static void main(String[] args) 
 	{
-		mw = new MainWindow(); // the GUI
+//		mw = new MainWindow(); // the GUI
 		setupDatabase();
+		
+		// Testing
+//		 LIMIT 25
+		List<List<String>> teamCodes = executeQuery("SELECT * FROM team WHERE YEAR = 2011");
+//		 WHERE YEAR = 2011
+		List<List<String>> teamGameStats = executeQuery("SELECT * FROM team_game_statistics");
+		System.out.println("Finised:: " + teamGameStats.size());
+		
+		Questions q = new Questions();
+		
+		q.generateVictoryChain(teamGameStats, teamCodes);
+
 	}
 	
 	public static void handleUpdatePageDisplay(String pageCode, CreatePanel createPanel) 
