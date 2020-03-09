@@ -72,8 +72,9 @@ public class Football {
 	}
 	public static void main(String[] args) 
 	{
-		mw = new MainWindow(); // the GUI
 		setupDatabase();
+
+		mw = new MainWindow(); // the GUI
 	}
 	
 	public static void handleUpdatePageDisplay(String pageCode, CreatePanel createPanel) 
@@ -156,6 +157,45 @@ public class Football {
 		}
 	}
 
+	private List<List<String>> executeQueryNoHeader (String sqlQuery)
+	{
+		try 
+		{
+			// create a statement object
+			Statement stmt = sqlConnection.createStatement();
+			// send statement to DBMS
+			ResultSet result = stmt.executeQuery(sqlQuery);
+			ResultSetMetaData resultSetMetaData = result.getMetaData();
+
+			List<List<String>> toReturn = new ArrayList<List<String>>();
+			while(result.next())
+			{
+				List<String> row = new ArrayList<>();
+				for (int i = 0; i < resultSetMetaData.getColumnCount(); ++i)
+				{
+					row.add(result.getString(i + 1));
+				}
+				toReturn.add(row);
+			}
+
+			return toReturn;
+		}
+		catch(Exception ex)
+		{
+			System.out.println ("Error executing query: " + sqlQuery);
+		}
+		
+		return null;
+	}
+
+	private String getTeamCode (String teamName, String year)
+	{
+		String query = "select team_code from 	team where name = '" + teamName
+				+ "' and year = '"
+				+ year + "';";
+		var result = executeQueryNoHeader(query);
+		return result.get(0).get(0);
+ 	}
 
 	// Executes a given SQL query and returns the result
 	public static List<List<String>> executeQuery(String sqlQuery)
@@ -226,6 +266,67 @@ public class Football {
 	{
 		String[] toReturn = {"None", "conference", "drive", "game", "game_statistics", "kickoff", "kickoff_return", "pass", "play", "player", "player_game_statistics", "punt", "punt_return", "reception", "rush", "stadium", "team", "team_game_statistics"};
 		return toReturn;
+	}
+
+	public String[] getListOfTeams()
+	{
+		var result = executeQuery("select name from team where year = '2013';");
+		List<String> toReturn = new ArrayList<>();
+		result.forEach(toReturn::addAll);
+		toReturn.remove(0);
+		return toReturn.stream().toArray(String[] ::new);
+	}
+
+	public String[] getListOfConferences()
+	{
+		var result = executeQuery("select name from conference where year = '2013';");
+		List<String> toReturn = new ArrayList<>();
+		result.forEach(toReturn::addAll);
+		toReturn.remove(0);
+		return toReturn.stream().toArray(String[] ::new);
+	}
+
+	public String solveQuestion1(String team1, String team2)
+	{
+		String answer = "answer 1";
+		List<List<String>> teamCodes = executeQuery("SELECT * FROM team WHERE YEAR = 2013;");
+		List<List<String>> teamGameStats = executeQuery("SELECT * FROM team_game_statistics;");
+		System.out.println ("working on it...");
+		answer = Questions.generateVictoryChain(teamGameStats, teamCodes, getTeamCode(team1, "2013"), getTeamCode(team2, "2013"));
+		return answer;
+	}
+
+	public String solveQuestion3(String team)
+	{
+		String answer = "answer 3";
+		String query = Questions.generateQuestion3Query(team);
+
+		var result = executeQueryNoHeader(query).get(0);
+		answer = result.get(0) + " scored " + result.get(1) + " rushing yards against " + team + " in " + result.get(2);
+		return answer;
+	}
+
+	public List<List<String>> solveQuestion4(String conference)
+	{
+		
+		String query = Questions.generateQuestion4Query(conference);
+		var result = executeQueryNoHeader(query);
+		var header = new ArrayList<String>();
+		header.add("Team");
+		header.add("Home Advantage");
+		result.add(0, header);
+		return result;
+	}
+
+	public String solveQuestion5(String conference)
+	{
+		String query = Questions.generateQuestion5Query(conference);
+		var result = executeQueryNoHeader(query).get(0);
+		String answer = "In the conference " + result.get(0) 
+						+ ", " + result.get(1) 
+						+ " scored " + result.get(2)
+						+ " on " + result.get(3);
+		return answer;
 	}
 
 }

@@ -28,7 +28,7 @@ public class MainWindow extends JFrame {
 	// Panels for each page
 	TutorialPanel tutorialPanel;
 	CreatePanel createPanel;
-	ExamplePanel examplePanel;
+	QuestionsPanel questionsPanel;
 
 	protected void generateMainWindow() 
 	{
@@ -61,7 +61,7 @@ public class MainWindow extends JFrame {
 		// START: Sidebar Navigation Block
 
 		sidebarButtons = new JButton[5];
-		String[] sidebarText = { "Tutorial", "Example Commands", "Create query", "View Results", "Download" };
+		String[] sidebarText = { "Tutorial", "Questions", "Create query", "View Results", "Download" };
 		String[] sidebarDisplayCodes = { "tutorial", "example", "create", "view", "download" };
 
 		int currentHeight = 100;
@@ -218,12 +218,12 @@ public class MainWindow extends JFrame {
 		body.add(tutorialPanel);
 	}
 
-	private void generateExamplePanel()
+	private void generateQuestionsPanel()
 	{
-		examplePanel = new ExamplePanel();
-		examplePanel.setBounds(300, 100, WIDTH - 300, 500);
-		examplePanel.setVisible(true);
-		body.add(examplePanel);
+		questionsPanel = new QuestionsPanel(mainClass);
+		questionsPanel.setBounds(300, 100, WIDTH - 300, 500);
+		questionsPanel.setVisible(true);
+		body.add(questionsPanel);
 	}
 
 
@@ -231,7 +231,7 @@ public class MainWindow extends JFrame {
 	{
 		resultsHtmlTableView.setVisible(false);
 		createPanel.setVisible(false);
-		examplePanel.setVisible(false);
+		questionsPanel.setVisible(false);
 		tutorialPanel.setVisible(false);
 	}
 
@@ -248,7 +248,7 @@ public class MainWindow extends JFrame {
 
 		if (currentPageCode.equals("example"))
 		{
-			examplePanel.setVisible(true);
+			questionsPanel.setVisible(true);
 		}
 
 		else if (currentPageCode.equals("create"))
@@ -300,6 +300,7 @@ public class MainWindow extends JFrame {
 
 	MainWindow() {
 		mainClass = new Football();
+
 		/*
 		 * Context: What is given to dynamically update the view Page Route - "tutorial"
 		 * - "example" - "create" - "view" - Requires outputMatrix - "download" -
@@ -315,7 +316,7 @@ public class MainWindow extends JFrame {
 		// Generate all the tabbed views
 		generateNestedWindow();
 		generateCreatePanel();
-		generateExamplePanel();
+		generateQuestionsPanel();
 		generateTutorialPanel();
 		// Update with opening panel
 		updateNestedWindow();
